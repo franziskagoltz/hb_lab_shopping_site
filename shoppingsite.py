@@ -62,40 +62,24 @@ def show_shopping_cart():
 
     # TODO: Display the contents of the shopping cart.
 
-    orders = session["cart"]
+    orders = session.get("cart", {})
 
     melon_info = []
 
     total_order_cost = 0
 
-    for order in orders:
+    if orders:
+        for order in orders:
 
-        current_melon = melons.get_by_id(order)
-        melon_cost = orders[order] * current_melon.price
+            current_melon = melons.get_by_id(order)
+            melon_cost = orders[order] * current_melon.price
 
-        total_order_cost += melon_cost
+            total_order_cost += melon_cost
 
-        current_melon.melon_cost = melon_cost
-        current_melon.quantity = orders[order]
-        melon_info.append(current_melon)
+            current_melon.melon_cost = melon_cost
+            current_melon.quantity = orders[order]
+            melon_info.append(current_melon)
 
-
-
-    # The logic here will be something like:
-    #
-    # - get the cart dictionary from the session
-    # - create a list to hold melon objects and a variable to hold the total
-    #   cost of the order
-    # - loop over the cart dictionary, and for each melon id:
-    #    - get the corresponding Melon object
-    #    - compute the total cost for that type of melon
-    #    - add this to the order total
-    #    - add quantity and total cost as attributes on the Melon object
-    #    - add the Melon object to the list created above
-    # - pass the total order cost and the list of Melon objects to the template
-    #
-    # Make sure your function can also handle the case wherein no cart has
-    # been added to the session
 
     return render_template("cart.html",
                             melon_info=melon_info,
