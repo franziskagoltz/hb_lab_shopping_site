@@ -97,7 +97,9 @@ def show_shopping_cart():
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
 
-    return render_template("cart.html")
+    return render_template("cart.html",
+                            melon_info=melon_info,
+                            total_order_cost=total_order_cost)
 
 
 @app.route("/add_to_cart/<melon_id>")
