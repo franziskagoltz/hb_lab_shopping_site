@@ -69,6 +69,7 @@ def read_melon_types_from_file(filepath):
                                       color,
                                       seedless)
 
+
     return melon_types
 
 

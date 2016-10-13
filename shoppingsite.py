@@ -62,6 +62,25 @@ def show_shopping_cart():
 
     # TODO: Display the contents of the shopping cart.
 
+    orders = session["cart"]
+
+    melon_info = []
+
+    total_order_cost = 0
+
+    for order in orders:
+
+        current_melon = melons.get_by_id(order)
+        melon_cost = orders[order] * current_melon.price
+
+        total_order_cost += melon_cost
+
+        current_melon.melon_cost = melon_cost
+        current_melon.quantity = orders[order]
+        melon_info.append(current_melon)
+
+
+
     # The logic here will be something like:
     #
     # - get the cart dictionary from the session
@@ -89,19 +108,12 @@ def add_to_cart(melon_id):
     page and display a confirmation message: 'Melon successfully added to
     cart'."""
 
-    # TODO: Finish shopping cart functionality
-
-    # The logic here should be something like:
-    print session
     session["cart"] = session.get("cart", {})
     session["cart"][melon_id] = session["cart"].get(melon_id, 0) + 1
     flash("Melon successfully added to cart!!")
-    print session
-    return render_template("cart.html")
-
-    # - redirect the user to the cart page
-
-    return "Oops! This needs to be implemented!"
+    print session 
+    return redirect("/cart")
+    #return render_template("cart.html")
 
 
 @app.route("/login", methods=["GET"])
